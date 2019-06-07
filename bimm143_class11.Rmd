@@ -1,0 +1,111 @@
+---
+title: "bimm143_class11"
+author: "Fangchao He"
+date: "5/7/2019"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+The [PDB](https://www.rcsb.org/) is the main repository for biomolecular structure data.
+
+Q1: Download a CSV file from the PDB site (accessible from “Analyze” -> “PDB Statistics” > “by Experimental Method and Molecular Type”. Move this CSV file into your RStudio project and determine the percentage of structures solved by X-Ray and Electron Microscopy. From the website what proportion of structures are protein? Aim to have a rendered GitHub document with working code that yields your answers.
+
+```{r}
+db <- read.csv("Data Export Summary.csv")
+db
+```
+
+How many are X-Ray, etc...
+```{r}
+(db$Total/sum(db$Total)) * 100
+
+```
+
+
+What percent are Protein...
+```{r}
+(sum(db$Proteins) / sum(db$Total)) / 100
+```
+
+We could also try the datapasta package and try to paste using "Addins" -> "paste as dataframe".
+
+```{r}
+library(datapasta)
+tmp <- data.frame(stringsAsFactors = FALSE,
+   Experimental.Method = c("X-Ray", "NMR", "Electron Microscopy", "Other",
+                           "Multi Method", "Total"),
+              Proteins = c(126880, 11062, 2277, 256, 129, 140604),
+         Nucleic.Acids = c(2012, 1279, 31, 4, 5, 3331),
+        ProteinComplex = c(6547, 259, 800, 6, 2, 7614),
+                 Other = c(8, 8, 0, 13, 1, 30),
+                 Total = c(135447, 12608, 3108, 279, 137, 151579)
+   )
+```
+
+Q2: Type HIV in the PDB website search box on the home page and determine how many
+HIV-1 protease structures are in the current PDB?
+
+
+
+
+```{r}
+
+```
+
+
+```{r}
+library(bio3d)
+```
+
+```{r}
+example(plot.bio3d)
+```
+
+```{r}
+pdb <- read.pdb("1hsg")
+
+```
+
+```{r}
+head(pdb$atom)
+```
+
+```{r}
+
+```
+
+```{r}
+pdb$atom[1:2, c("eleno", "elety", "x","y","z")]
+```
+
+
+```{r}
+pdb$atom$elety[1:2]
+```
+
+
+```{r}
+plot.bio3d(pdb$atom$b[pdb$calpha], sse=pdb, typ="l", ylab="B-factor")
+```
+
+
+```{r}
+pdb$xyz
+```
+
+
+```{r}
+inds <- atom.select(pdb, "proteins")
+
+```
+
+```{r}
+aa <- get.seq("1ake_A")
+b <- blast.pdb(aa)
+
+```
+

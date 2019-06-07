@@ -1,0 +1,19 @@
+---
+title: "bimm143_class11"
+author: "Fangchao He"
+date: "5/7/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+The [PDB](https://www.rcsb.org/) is the main repository for biomolecular structure data.
+
+
+```{r}
+db <- read.csv("Data Export Summary.csv")
+```
+
